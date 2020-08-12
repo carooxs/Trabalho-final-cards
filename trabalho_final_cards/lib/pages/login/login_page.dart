@@ -6,11 +6,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _key = GlobalKey<ScaffoldState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _key,
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: Form(
@@ -36,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               controller: _emailController,
             ),
-             SizedBox(
+            SizedBox(
               height: 8,
             ),
             TextFormField(
@@ -46,10 +48,13 @@ class _LoginPageState extends State<LoginPage> {
               controller: _passwordController,
               obscureText: true,
             ),
-             SizedBox(
+            SizedBox(
               height: 8,
             ),
-            OutlineButton(onPressed:null, child: Text('Entrar') ,)
+            OutlineButton(
+              onPressed: null,
+              child: Text('Entrar'),
+            )
           ],
         )),
       ),
