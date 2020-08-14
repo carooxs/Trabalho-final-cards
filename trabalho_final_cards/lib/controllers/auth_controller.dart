@@ -1,9 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
 import 'package:trabalho_final_cards/services/login_repository.dart';
 import 'package:trabalho_final_cards/services/login_service.dart';
+import 'package:trabalho_final_cards/models/login.dart';
+part 'auth_controller.g.dart';
 
 class AuthController = _AuthControllerBase with _$AuthController;
-abstract class _AuthController with Store {
+abstract class _AuthControllerBase with Store {
   final LoginRepository _loginRepository;
   final _loginService = LoginService();
 
@@ -13,19 +16,19 @@ abstract class _AuthController with Store {
   @observable
   bool isLoading = true;
   @observable
-  AppState appState;
+  LoginState loginRepository;
   @observable
   Result<String> loginResult;
 
   @computed
-  bool get isLogedIn => appState != null;
+  bool get isLogedIn => loginRepository != null;
 
   @action
   void getCurrent() {
     isLoading = true;
-    _appStateRepository
+    _loginRepository
         .getCurrent()
-        .then((value) => appState = value)
+        .then((value) => loginRepository = value)
         .whenComplete(() => isLoading = false);
   }
 
@@ -40,6 +43,6 @@ abstract class _AuthController with Store {
   @action
   Future<void> signOut() async {
     await _loginService.signOut();
-    appState = null;
+    loginRepository = null;
   }
 }
